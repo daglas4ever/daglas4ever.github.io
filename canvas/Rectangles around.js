@@ -36,7 +36,7 @@ RecCanvas.addEventListener("resize", function() {
 });
 
 RecCanvas.addEventListener('click', function(event) {
-    initRect();
+   // initRect();
 });
 
 
