@@ -1,0 +1,42 @@
+@media(min-width:720px) {
+    .container {
+        display: flex;
+        /* puts all the elements side by side */
+        /*align-items: flex-start*/
+        /*flex start toward the top felx end toward bottom*/
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+}
+
+body {
+    background-color: slategray;
+}
+
+.header {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    border: 5px rgb(56, 56, 56) solid;
+    text-align: center;
+    color: white;
+}
+
+.container {
+    border: 4px rgb(12, 12, 12) solid;
+    min-width: 525px;
+}
+
+.container div {
+    display: flex;
+    border: 2px rgb(255, 255, 255) solid;
+    margin: 5px;
+}
+
+.box {
+    min-width: 500px;
+    min-height: 500px;
+    max-height: 650px;
+    max-width: 1200;
+}
