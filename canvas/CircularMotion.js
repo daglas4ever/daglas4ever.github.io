@@ -45,7 +45,7 @@ canvas.addEventListener("resize", function() {
 });
 
 canvas.addEventListener('click', function(event) {
-    initCircle();
+    //initCircle();
 });
 
 // Utility Functions
