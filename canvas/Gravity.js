@@ -27,7 +27,7 @@ GravityCanvas.addEventListener("mouseleave", function(event) {
     GravityMouse.y = undefined;
 });
 
-GravityCanvas.addEventListener("resize", function() {
+addEventListener("resize", function() {
     GravityCanvas.width = GravityParent.offsetWidth;
     GravityCanvas.height = GravityParent.offsetHeight;
 

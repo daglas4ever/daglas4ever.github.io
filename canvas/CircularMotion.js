@@ -32,7 +32,7 @@ canvas.addEventListener("mouseleave", function(event) {
     CircularMouse.y = parent.offsetHeight / 2;
 });
 
-canvas.addEventListener("resize", function() {
+addEventListener("resize", function() {
 
 
     canvas.width = parent.offsetWidth - 5;
@@ -41,7 +41,7 @@ canvas.addEventListener("resize", function() {
 });
 /*
 canvas.addEventListener('click', function(event) {
-    //initCircle();
+    initCircle();
 });
 */
 // Utility Functions
@@ -117,7 +117,7 @@ function initCircle() {
 function animateCircle() {
     requestAnimationFrame(animateCircle);
     c.fillStyle = 'rgba(255,255,255,.05)';
-    c.fillRect(0, 0, canvas.width, canvas.height);
+    c.fillRect(0, 0, parent.offsetWidth, parent.offsetHeight);
     //c.clearRect(0, 0, canvas.width, canvas.height);
 
     for (var i = 0; i < parts.length; i++)

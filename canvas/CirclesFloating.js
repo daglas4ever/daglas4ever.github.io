@@ -24,7 +24,7 @@ CirFlotCanvas.addEventListener("mouseleave", function(event) {
     CirFloMouse.y = undefined;
 });
 
-CirFlotCanvas.addEventListener('resize', function(event) {
+addEventListener('resize', function(event) {
 
     CirFlotCanvas.width = CirclesFloatingParent.offsetWidth;
     CirFlotCanvas.height = CirclesFloatingParent.offsetHeight;
@@ -119,6 +119,7 @@ var CirFLoaArraySize = 100;
 function cirFloInit() {
     circleArray = [];
     for (var i = 0; i < CirFLoaArraySize; i++) {
+
         var radius = Math.random() * 5 + 2;
         var x = Math.random() * (CirFlotCanvas.width - radius * 2) + radius;
         var y = Math.random() * (CirFlotCanvas.height - radius * 2) + radius;
@@ -135,7 +136,7 @@ function cirFloInit() {
 function cirFloAnimate() {
     requestAnimationFrame(cirFloAnimate);
     CirFloContext.fillStyle = 'rgba(255,255,255,.1)';
-    CirFloContext.fillRect(0, 0, CirFlotCanvas.width, CirFlotCanvas.height);
+    CirFloContext.fillRect(0, 0, CirclesFloatingParent.offsetWidth, CirclesFloatingParent.offsetHeight);
 
 
     for (var i = 0; i < circleArray.length; i++) {

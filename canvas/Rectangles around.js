@@ -34,14 +34,14 @@ RecCanvas.addEventListener("mouseleave", function(event) {
     mou.y = undefined;
 });
 
-RecCanvas.addEventListener("resize", function() {
+addEventListener("resize", function() {
     RecCanvas.width = RectanglesParent.offsetWidth - 5;
     RecCanvas.height = RectanglesParent.offsetHeight;
     initRect();
 });
 /*
 RecCanvas.addEventListener('click', function(event) {
-   // initRect();
+    initRect();
 });
 */
 
