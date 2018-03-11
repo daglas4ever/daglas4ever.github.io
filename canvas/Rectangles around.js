@@ -9,8 +9,8 @@ RecCanvas.height = RectanglesParent.offsetHeight;
 
 // Variables
 var mou = {
-    x: innerWidth / 2,
-    y: innerHeight / 2
+    x: undefined,
+    y: undefined
 };
 
 var RectColors = [
@@ -29,16 +29,21 @@ RecCanvas.addEventListener("mousemove", function(event) {
 
 });
 
+RecCanvas.addEventListener("mouseleave", function(event) {
+    mou.x = undefined;
+    mou.y = undefined;
+});
+
 RecCanvas.addEventListener("resize", function() {
     RecCanvas.width = RectanglesParent.offsetWidth - 5;
     RecCanvas.height = RectanglesParent.offsetHeight;
     initRect();
 });
-
+/*
 RecCanvas.addEventListener('click', function(event) {
    // initRect();
 });
-
+*/
 
 var effectRange = 100;
 // Objects
@@ -101,12 +106,13 @@ function Rectangle(x, y, dy, dx, width, height, color) {
 // Implementation
 
 var rectanglesArray = [];
+var RectanglesArraySize = 100;
 
 function initRect() {
 
 
     rectanglesArray = [];
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < RectanglesArraySize; i++) {
         var x, y, dy, dx, width = 40,
             height = 40,
             color;

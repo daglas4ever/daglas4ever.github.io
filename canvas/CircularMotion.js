@@ -23,17 +23,13 @@ var colors = [
 
 // Event Listeners
 canvas.addEventListener("mousemove", function(event) {
-    /*
-        console.log('layer X ' + event.layerX);
-        console.log('Movement X ' + event.movementX);
-        console.log('Offset X ' + event.offsetX);
-        console.log('Page X' + event.pageX);
-        console.log('Screen' + event.screenX);
-    */
     CircularMouse.x = event.offsetX;
     CircularMouse.y = event.offsetY;
+});
 
-
+canvas.addEventListener("mouseleave", function(event) {
+    CircularMouse.x = parent.offsetWidth / 2;
+    CircularMouse.y = parent.offsetHeight / 2;
 });
 
 canvas.addEventListener("resize", function() {
@@ -43,11 +39,11 @@ canvas.addEventListener("resize", function() {
     canvas.height = parent.offsetHeight;
     initCircle();
 });
-
+/*
 canvas.addEventListener('click', function(event) {
     //initCircle();
 });
-
+*/
 // Utility Functions
 function randomIntFromRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
