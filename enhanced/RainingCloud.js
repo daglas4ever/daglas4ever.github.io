@@ -476,6 +476,9 @@
     }
 
     addEventListener('resize', init);
+    if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(function () { init(); }).observe(parent);
+    }
     init();
     loop();
 })();
