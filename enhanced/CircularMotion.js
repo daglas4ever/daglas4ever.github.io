@@ -11,9 +11,9 @@
 
     var CLICK_MAX_MS = 200;
     var CLICK_MAX_MOVE = 6;
-    var WELL_LIFE = 70;
-    var WELL_RANGE = 140;
-    var WELL_FORCE = 1.6;
+    var WELL_LIFE = 220;
+    var WELL_RANGE = 200;
+    var WELL_FORCE = 4.5;
     var GATHER_FACTOR = 0.32;
 
     var mouse = { x: canvas.width / 2, y: canvas.height / 2, active: false };
@@ -87,7 +87,8 @@
             var dy = well.y - (oy + this.offset.y);
             var d = Math.hypot(dx, dy);
             if (d < WELL_RANGE && d > 0.01) {
-                var falloff = (1 - d / WELL_RANGE) * (well.life / WELL_LIFE);
+                var lifeStrength = Math.min(1, (well.life / WELL_LIFE) * 2.2);
+                var falloff = (1 - d / WELL_RANGE) * lifeStrength;
                 this.offset.vx += (dx / d) * WELL_FORCE * falloff;
                 this.offset.vy += (dy / d) * WELL_FORCE * falloff;
             }
