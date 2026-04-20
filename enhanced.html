@@ -5,48 +5,64 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Mohammad Daghlas &mdash; Enhanced Version</title>
-    <meta name="description" content="Enhanced canvas experiments">
+    <title>Mohammad Daghlas &mdash; Canvas Unwind</title>
+    <meta name="description" content="Tiny interactive canvas toys for a quiet break">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./enhanced/enhanced.css" />
 </head>
 
-<body>
+<body class="galleryBody">
     <div class="mainContainer">
         <div class="header">
-            <h1>Enhanced Canvas Experiments</h1>
+            <h1>Canvas Unwind</h1>
+            <p class="subtitle">Little interactive toys to fidget with &mdash; pick one, breathe, take a break</p>
             <a class="backLink" href="./index.html">&larr; Back to original</a>
         </div>
 
-        <div class="container">
+        <div class="gallery">
 
-            <div class="box" id="EnhCloudParent">
-                <canvas id="EnhCloudCanvas"></canvas>
-                <span class="label">Raining Cloud &mdash; gated physics &amp; lightning</span>
+            <div class="previewCard">
+                <div class="previewBox" id="EnhCloudParent">
+                    <canvas id="EnhCloudCanvas"></canvas>
+                </div>
+                <div class="previewLabel">Raining Cloud</div>
+                <a class="previewOverlay" href="./enhanced/cloud.html" aria-label="Open Raining Cloud"></a>
                 <script src="./enhanced/RainingCloud.js"></script>
             </div>
 
-            <div class="box" id="EnhCircularParent">
-                <canvas id="EnhCircularCanvas"></canvas>
-                <span class="label">Circular Motion &mdash; hue cycle &amp; ring layers</span>
+            <div class="previewCard">
+                <div class="previewBox" id="EnhCircularParent">
+                    <canvas id="EnhCircularCanvas"></canvas>
+                </div>
+                <div class="previewLabel">Circular Motion</div>
+                <a class="previewOverlay" href="./enhanced/circular.html" aria-label="Open Circular Motion"></a>
                 <script src="./enhanced/CircularMotion.js"></script>
             </div>
 
-            <div class="box" id="EnhRectParent">
-                <canvas id="EnhRectCanvas"></canvas>
-                <span class="label">Rectangles &mdash; eased growth &amp; rotation</span>
+            <div class="previewCard">
+                <div class="previewBox" id="EnhRectParent">
+                    <canvas id="EnhRectCanvas"></canvas>
+                </div>
+                <div class="previewLabel">Rectangles</div>
+                <a class="previewOverlay" href="./enhanced/rectangles.html" aria-label="Open Rectangles"></a>
                 <script src="./enhanced/Rectangles.js"></script>
             </div>
 
-            <div class="box" id="EnhGravityParent">
-                <canvas id="EnhGravityCanvas"></canvas>
-                <span class="label">Gravity &mdash; collisions &amp; mouse repulsion</span>
+            <div class="previewCard">
+                <div class="previewBox" id="EnhGravityParent">
+                    <canvas id="EnhGravityCanvas"></canvas>
+                </div>
+                <div class="previewLabel">Gravity</div>
+                <a class="previewOverlay" href="./enhanced/gravity.html" aria-label="Open Gravity"></a>
                 <script src="./enhanced/Gravity.js"></script>
             </div>
 
-            <div class="box" id="EnhCirFloParent">
-                <canvas id="EnhCirFloCanvas"></canvas>
-                <span class="label">Circles Floating &mdash; click to explode</span>
+            <div class="previewCard">
+                <div class="previewBox" id="EnhCirFloParent">
+                    <canvas id="EnhCirFloCanvas"></canvas>
+                </div>
+                <div class="previewLabel">Circles Floating</div>
+                <a class="previewOverlay" href="./enhanced/circles.html" aria-label="Open Circles Floating"></a>
                 <script src="./enhanced/CirclesFloating.js"></script>
             </div>
 

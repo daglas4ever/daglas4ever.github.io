@@ -17,11 +17,22 @@ body {
     border: 5px var(--LightPaige) solid;
     text-align: center;
     color: var(--LightRed);
+    padding: 8px 0;
+}
+
+.header h1 {
+    margin: 4px 0;
+}
+
+.subtitle {
+    color: var(--LightPaige);
+    margin: 4px 0 10px 0;
+    font-size: 14px;
 }
 
 .backLink {
     display: inline-block;
-    margin: 10px auto;
+    margin: 6px auto;
     padding: 8px 16px;
     background: var(--LightBlue);
     color: var(--BaseBackColor);
@@ -31,41 +42,123 @@ body {
     border-radius: 6px;
 }
 
-.container {
+.backLink:hover {
+    background: var(--LightPaige);
+}
+
+/* --- Gallery layout --- */
+
+.gallery {
     border: 4px var(--LightPaige) solid;
-    min-width: 400px;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
 }
 
-.container .box {
-    border: 2px var(--LightPaige) solid;
-    margin: 5px;
-    min-width: 300px;
-    min-height: 500px;
-    max-height: 650px;
-    background-color: white;
+.previewCard {
     position: relative;
+    background: white;
+    border: 3px var(--LightPaige) solid;
+    border-radius: 6px;
     overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.box canvas {
+.previewCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 250, 171, 0.25);
+}
+
+.previewBox {
+    width: 100%;
+    height: 220px;
+    background: white;
+    position: relative;
+}
+
+.previewBox canvas {
     display: block;
     width: 100%;
     height: 100%;
 }
 
-.box .label {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    padding: 4px 8px;
-    background: rgba(21, 41, 64, 0.75);
+.previewLabel {
+    background: var(--BaseBackColor);
     color: var(--LightPaige);
+    text-align: center;
+    padding: 10px 8px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border-top: 2px solid var(--LightPaige);
+}
+
+.previewOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.previewCard:hover .previewLabel {
+    background: var(--LightRed);
+    color: var(--BaseBackColor);
+}
+
+/* --- Full-screen experiment pages --- */
+
+body.fullBody {
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.fullParent {
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+}
+
+.fullParent canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.floatingBack {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 10;
+    padding: 8px 14px;
+    background: var(--LightRed);
+    color: var(--BaseBackColor);
+    text-decoration: none;
+    font-weight: bold;
+    border: 3px solid var(--LightPaige);
+    border-radius: 6px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.floatingBack:hover {
+    background: var(--LightPaige);
+}
+
+.hint {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 10;
+    padding: 6px 12px;
+    background: rgba(21, 41, 64, 0.8);
+    color: var(--LightPaige);
+    border: 2px solid var(--LightPaige);
+    border-radius: 6px;
     font-size: 12px;
-    border-radius: 4px;
+    max-width: 320px;
     pointer-events: none;
-    z-index: 1;
 }
