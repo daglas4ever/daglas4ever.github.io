@@ -14,6 +14,7 @@
     var UMBRELLA_RADIUS = 45;
     var DRAG_THRESHOLD = 5;
     var CLOUD_HIT_RADIUS = 100;
+    var SKELETON_FRAMES = 300;
 
     var mouse = { x: 0, y: 0, active: false };
     var pointerDown = null;
@@ -21,6 +22,7 @@
     var dragOffset = { x: 0, y: 0 };
     var lightnings = [];
     var splashes = [];
+    var guy = null;
 
     function pickCloud(x, y) {
         for (var i = 0; i < clouds.length; i++) {
@@ -99,6 +101,7 @@
         var startY = c.cy + 20 * c.scale;
         var pts = buildBolt(startX, startY, x, y, Math.hypot(x - startX, y - startY) * 0.4);
         lightnings.push({ pts: pts, life: 12, max: 12 });
+        if (guy && guy.hitTest(x, y)) guy.skeletonTimer = SKELETON_FRAMES;
     }
 
     function drawLightnings() {
@@ -184,6 +187,159 @@
         }
     }
 
+    function Guy() {
+        this.height = 62;
+        this.y = 0;
+        this.x = 0;
+        this.dir = 1;
+        this.speed = 0.8;
+        this.phase = 0;
+        this.skeletonTimer = 0;
+        this.umbRadius = 34;
+    }
+    Guy.prototype.place = function () {
+        this.y = canvas.height - 10;
+        this.x = canvas.width * 0.2;
+    };
+    Guy.prototype.umbrellaCenter = function () {
+        return { x: this.x + 4, y: this.y - this.height - 6 };
+    };
+    Guy.prototype.umbrellaSurfaceY = function (x) {
+        var uc = this.umbrellaCenter();
+        var dx = x - uc.x;
+        if (Math.abs(dx) > this.umbRadius) return null;
+        return uc.y - Math.sqrt(this.umbRadius * this.umbRadius - dx * dx);
+    };
+    Guy.prototype.hitTest = function (x, y) {
+        return x > this.x - 18 && x < this.x + 18 &&
+            y > this.y - this.height - 18 && y < this.y + 6;
+    };
+    Guy.prototype.update = function () {
+        this.x += this.dir * this.speed;
+        this.phase += 0.18;
+        if (this.x > canvas.width - 30) this.dir = -1;
+        if (this.x < 30) this.dir = 1;
+        if (this.skeletonTimer > 0) this.skeletonTimer--;
+        this.draw();
+    };
+    Guy.prototype.draw = function () {
+        var isSkel = this.skeletonTimer > 0;
+        var bob = Math.abs(Math.sin(this.phase)) * 1.5;
+        var feetY = this.y - bob;
+        var hipY = feetY - 22;
+        var shoulderY = feetY - this.height + 12;
+        var headY = feetY - this.height;
+        var legSwing = Math.sin(this.phase) * 9;
+        var armSwing = -legSwing * 0.4;
+
+        var lineColor = isSkel ? '#eef2f6' : '#FFFAAB';
+        var skinFill = isSkel ? '#eef2f6' : '#FFD6A5';
+        var bodyFill = isSkel ? '#eef2f6' : '#45BDFF';
+
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(this.x, hipY);
+        ctx.lineTo(this.x - legSwing, feetY);
+        ctx.moveTo(this.x, hipY);
+        ctx.lineTo(this.x + legSwing, feetY);
+        ctx.stroke();
+
+        if (isSkel) {
+            ctx.strokeStyle = lineColor;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(this.x, hipY);
+            ctx.lineTo(this.x, shoulderY);
+            ctx.stroke();
+
+            ctx.lineWidth = 1.8;
+            for (var r = 0; r < 4; r++) {
+                var ry = shoulderY + 5 + r * 5;
+                ctx.beginPath();
+                ctx.moveTo(this.x - 6, ry);
+                ctx.lineTo(this.x + 6, ry);
+                ctx.stroke();
+            }
+        } else {
+            ctx.fillStyle = bodyFill;
+            ctx.strokeStyle = lineColor;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(this.x - 7, hipY);
+            ctx.lineTo(this.x + 7, hipY);
+            ctx.lineTo(this.x + 6, shoulderY);
+            ctx.lineTo(this.x - 6, shoulderY);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(this.x - 6, shoulderY + 2);
+        ctx.lineTo(this.x - 10 + armSwing, shoulderY + 18);
+        ctx.moveTo(this.x + 6, shoulderY + 2);
+        ctx.lineTo(this.x + 10, headY + 4);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(this.x, headY, 9, 0, Math.PI * 2);
+        ctx.fillStyle = skinFill;
+        ctx.fill();
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        if (isSkel) {
+            ctx.fillStyle = '#152940';
+            ctx.beginPath();
+            ctx.arc(this.x - 3, headY - 1, 1.8, 0, Math.PI * 2);
+            ctx.arc(this.x + 3, headY - 1, 1.8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#152940';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(this.x - 4, headY + 5);
+            ctx.lineTo(this.x + 4, headY + 5);
+            ctx.moveTo(this.x - 3, headY + 3);
+            ctx.lineTo(this.x - 3, headY + 7);
+            ctx.moveTo(this.x, headY + 3);
+            ctx.lineTo(this.x, headY + 7);
+            ctx.moveTo(this.x + 3, headY + 3);
+            ctx.lineTo(this.x + 3, headY + 7);
+            ctx.stroke();
+        }
+
+        var uc = this.umbrellaCenter();
+        ctx.beginPath();
+        ctx.arc(uc.x, uc.y, this.umbRadius, Math.PI, Math.PI * 2);
+        ctx.closePath();
+        var g = ctx.createLinearGradient(uc.x, uc.y - this.umbRadius, uc.x, uc.y);
+        if (isSkel) {
+            g.addColorStop(0, '#444');
+            g.addColorStop(1, '#111');
+        } else {
+            g.addColorStop(0, '#FF5E7D');
+            g.addColorStop(1, '#8C001C');
+        }
+        ctx.fillStyle = g;
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 2;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(uc.x, uc.y);
+        ctx.lineTo(this.x + 10, headY + 4);
+        ctx.stroke();
+    };
+
     function Cloud(cx, cy, scale, speed) {
         this.cx = cx;
         this.cy = cy;
@@ -261,6 +417,15 @@
             }
         }
 
+        if (guy) {
+            var gsurfY = guy.umbrellaSurfaceY(this.x);
+            if (gsurfY !== null && prevY < gsurfY && this.y >= gsurfY) {
+                spawnSplash(this.x, gsurfY);
+                this.reset(false);
+                return;
+            }
+        }
+
         if (this.y > canvas.height) { this.reset(false); return; }
 
         ctx.beginPath();
@@ -280,6 +445,8 @@
             new Cloud(canvas.width * 0.3, canvas.height * 0.3, 1.0, 0.6),
             new Cloud(canvas.width * 0.7, canvas.height * 0.45, 0.75, -0.45)
         ];
+        if (!guy) guy = new Guy();
+        guy.place();
         var count = Math.floor(canvas.width / 4);
         drops = [];
         for (var i = 0; i < count; i++) drops.push(new Drop());
@@ -299,6 +466,7 @@
         for (var i = 0; i < clouds.length; i++) clouds[i].update();
         for (var j = 0; j < drops.length; j++) drops[j].update();
         updateSplashes();
+        if (guy) guy.update();
         drawLightnings();
         drawUmbrella();
 
