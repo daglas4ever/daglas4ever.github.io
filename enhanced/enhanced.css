@@ -51,11 +51,21 @@ body {
     overflow: hidden;
 }
 
-.placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--BaseBackColor);
-    text-align: center;
-    padding: 20px;
+.box canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.box .label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 4px 8px;
+    background: rgba(21, 41, 64, 0.75);
+    color: var(--LightPaige);
+    font-size: 12px;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 1;
 }
