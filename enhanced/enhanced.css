@@ -6,75 +6,139 @@
     --DarkRed: #8C001C;
 }
 
-body {
-    background-color: var(--BaseBackColor);
-    margin: 0;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+* {
+    box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    color: #f5f5f5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--BaseBackColor);
+}
+
+body.galleryBody {
+    background:
+        radial-gradient(ellipse at 15% -10%, rgba(69, 189, 255, 0.18) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 110%, rgba(255, 94, 125, 0.15) 0%, transparent 45%),
+        linear-gradient(180deg, #0d1b2e 0%, #152940 60%, #0f1e31 100%);
+    min-height: 100vh;
+    background-attachment: fixed;
+}
+
+/* --- Header --- */
+
 .header {
-    margin: 0 0 10px 0;
-    border: 5px var(--LightPaige) solid;
+    border: none;
     text-align: center;
-    color: var(--LightRed);
-    padding: 8px 0;
+    padding: 72px 24px 36px;
+    max-width: 920px;
+    margin: 0 auto;
+    color: inherit;
 }
 
 .header h1 {
-    margin: 4px 0;
+    font-size: clamp(38px, 5.5vw, 64px);
+    font-weight: 300;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin: 0 0 16px 0;
+    background: linear-gradient(135deg, #FFFAAB 0%, #FF9AA8 55%, #FF5E7D 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .subtitle {
-    color: var(--LightPaige);
-    margin: 4px 0 10px 0;
-    font-size: 14px;
+    color: rgba(255, 250, 171, 0.72);
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0 auto 28px;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+    max-width: 560px;
 }
 
 .backLink {
-    display: inline-block;
-    margin: 6px auto;
-    padding: 8px 16px;
-    background: var(--LightBlue);
-    color: var(--BaseBackColor);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(69, 189, 255, 0.1);
+    color: var(--LightBlue);
+    border: 1px solid rgba(69, 189, 255, 0.3);
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 14px;
     text-decoration: none;
-    font-weight: bold;
-    border: 3px solid var(--LightPaige);
-    border-radius: 6px;
+    letter-spacing: 0.2px;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .backLink:hover {
-    background: var(--LightPaige);
+    background: rgba(69, 189, 255, 0.2);
+    border-color: rgba(69, 189, 255, 0.6);
+    transform: translateX(-2px);
 }
 
-/* --- Gallery layout --- */
+/* --- Gallery grid --- */
 
 .gallery {
-    border: 4px var(--LightPaige) solid;
-    padding: 20px;
+    border: none;
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto 80px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 22px;
 }
 
 .previewCard {
     position: relative;
-    background: white;
-    border: 3px var(--LightPaige) solid;
-    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 250, 171, 0.15);
+    border-radius: 18px;
     overflow: hidden;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.28s ease,
+                box-shadow 0.28s ease;
+}
+
+.previewCard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 250, 171, 0.2), rgba(255, 94, 125, 0.05) 50%, rgba(69, 189, 255, 0.15));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.28s ease;
 }
 
 .previewCard:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 250, 171, 0.25);
+    transform: translateY(-6px);
+    border-color: rgba(255, 250, 171, 0.35);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.45),
+        0 8px 24px rgba(255, 94, 125, 0.12);
+}
+
+.previewCard:hover::before {
+    opacity: 1;
 }
 
 .previewBox {
     width: 100%;
     height: 220px;
-    background: white;
+    background: #f7f6f1;
     position: relative;
+    overflow: hidden;
 }
 
 .previewBox canvas {
@@ -83,14 +147,42 @@ body {
     height: 100%;
 }
 
+.previewBox::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 70%, rgba(13, 27, 46, 0.35) 100%);
+    pointer-events: none;
+}
+
 .previewLabel {
-    background: var(--BaseBackColor);
+    padding: 16px 20px;
+    background: transparent;
     color: var(--LightPaige);
-    text-align: center;
-    padding: 10px 8px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    border-top: 2px solid var(--LightPaige);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: inherit;
+}
+
+.previewLabel::after {
+    content: '→';
+    color: rgba(255, 250, 171, 0.5);
+    font-size: 18px;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.previewCard:hover .previewLabel {
+    color: #fff;
+}
+
+.previewCard:hover .previewLabel::after {
+    transform: translateX(6px);
+    color: var(--LightRed);
 }
 
 .previewOverlay {
@@ -99,11 +191,6 @@ body {
     z-index: 2;
     text-decoration: none;
     cursor: pointer;
-}
-
-.previewCard:hover .previewLabel {
-    background: var(--LightRed);
-    color: var(--BaseBackColor);
 }
 
 /* --- Full-screen experiment pages --- */
@@ -130,35 +217,64 @@ body.fullBody {
 
 .floatingBack {
     position: fixed;
-    top: 14px;
-    left: 14px;
+    top: 20px;
+    left: 20px;
     z-index: 10;
-    padding: 8px 14px;
-    background: var(--LightRed);
-    color: var(--BaseBackColor);
+    padding: 10px 18px;
+    background: rgba(21, 41, 64, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--LightPaige);
     text-decoration: none;
-    font-weight: bold;
-    border: 3px solid var(--LightPaige);
-    border-radius: 6px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid rgba(255, 250, 171, 0.3);
+    border-radius: 999px;
+    letter-spacing: 0.2px;
+    font-family: inherit;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .floatingBack:hover {
-    background: var(--LightPaige);
+    background: rgba(21, 41, 64, 0.95);
+    border-color: rgba(255, 250, 171, 0.6);
+    transform: translateX(-2px);
 }
 
 .hint {
     position: fixed;
-    top: 14px;
-    right: 14px;
+    top: 20px;
+    right: 20px;
     z-index: 10;
-    padding: 6px 12px;
-    background: rgba(21, 41, 64, 0.8);
-    color: var(--LightPaige);
-    border: 2px solid var(--LightPaige);
-    border-radius: 6px;
+    padding: 10px 16px;
+    background: rgba(21, 41, 64, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: rgba(255, 250, 171, 0.9);
+    border: 1px solid rgba(255, 250, 171, 0.2);
+    border-radius: 12px;
     font-size: 12px;
     max-width: 320px;
     pointer-events: none;
+    font-family: inherit;
+    letter-spacing: 0.2px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding: 48px 20px 24px;
+    }
+    .gallery {
+        padding: 16px;
+        gap: 16px;
+    }
+    .previewBox {
+        height: 180px;
+    }
+    .hint {
+        font-size: 11px;
+        max-width: calc(100vw - 40px);
+    }
 }
